@@ -1,3 +1,7 @@
+from sqlalchemy.orm import validates
+from server.extensions import db
+
+
 class Appearance(db.Model):
     __tablename__ = 'appearances'
     
