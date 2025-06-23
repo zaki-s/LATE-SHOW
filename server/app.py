@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
-from server.models import User, Guest, Episode, Appearance
 from server.extensions import db, migrate
-from .config import Config
+from server.config import Config
+from server.routes import auth_bp
 
 def create_app():
     app = Flask(__name__)
@@ -12,8 +12,6 @@ def create_app():
     migrate.init_app(app, db)
     JWTManager(app)
 
-    # Import models so Flask-Migrate can register them
-    with app.app_context():
-        from server import models
+    app.register_blueprint(auth_bp, url_prefix="/auth")
 
     return app
