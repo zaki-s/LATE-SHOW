@@ -23,7 +23,7 @@ def signup():
     db.session.add(user)
     db.session.commit()
 
-    token = create_access_token(identity=user.id)
+    token = create_access_token(identity=str(user.id))
     return jsonify({"message": "User created", "access_token": token}), 201
 
 @auth_bp.route("/login", methods=["POST"])
@@ -39,5 +39,5 @@ def login():
     if not user or not user.check_password(password):
         return jsonify({"error": "Invalid credentials"}), 401
 
-    token = create_access_token(identity=user.id)
+    token = create_access_token(identity=str(user.id))
     return jsonify({"message": "Login successful", "access_token": token}), 200
